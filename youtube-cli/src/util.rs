@@ -10,7 +10,7 @@ pub fn hash(str: &str) -> u64 {
 
 pub fn h_time(seconds: f64) -> String {
     let hours = (seconds / 3600.0).floor();
-    let minutes = (seconds / 60.0).floor();
+    let minutes = (seconds / 60.0).floor() - (hours * 60.0);
     let seconds = (seconds % 60.0).floor();
 
     if hours > 0.0 {
