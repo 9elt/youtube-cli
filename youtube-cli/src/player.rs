@@ -217,7 +217,7 @@ impl Player {
             .position(|v| v == self.playing.as_ref().unwrap());
 
         if let Some(index) = found_index {
-            if index < self.playlist.len() - 2 {
+            if index < self.playlist.len() - 1 {
                 return Some(self.playlist[index + 1].clone());
             }
         }
