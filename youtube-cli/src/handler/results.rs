@@ -43,8 +43,8 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                             app.sync_playlists();
                         } else if app.player.playing.is_none() {
                             app.player.play(video).await;
-                            app.sync_playlists();
                             app.render_playlist.data.push(video.clone());
+                            app.sync_playlists();
                         } else {
                             app.render_playlist.data.push(video.clone());
                         }
