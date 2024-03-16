@@ -1,0 +1,2 @@
+[workspace]
+members = ["youtube-api", "youtube-cli"]

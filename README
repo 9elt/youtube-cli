@@ -1,0 +1,36 @@
+YouTube Client
+
+>> work in progress
+
+A simple, audio only, YouTube TUI client. Requires mpv (https://mpv.io/)
+
+
+┌ Search ────────────────────────────────────────────────────────────────────────YouTube Cli 0.1.0
+│ chopin op 55 no 1                                                                              │
+└────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌ Search Results ───────────┌ Mozart Playlist ─────────────────────── ┌ Drawer ──────────────────┐
+│                           │                                         │                          │
+│  ▶Chopin - Nocturne Op.  │  ▶Wolfgang Amadeus Mozart - Concerto f │  Queue                   │
+│   Kassia                  │   FacundoJG                             │                          │
+│   5:46 • 3.2M views • 3   │   10:03 • 1.7M views • 16 years ago     │  ▶ Mozart Playlist      │
+│                           │                                         │                          │
+│   Arthur Rubinstein - Ch  │   A Little Night Music - Wolfgang Amad  │                          │
+│   ArRubMusic              │   BeautifulFight                        │                          │
+│   5:42 • 1.6M views • 14  │   5:51 • 9.5M views • 15 years ago      │                          │
+│                           │                                         │                          │
+│   Chopin - Nocturne in F  │   Wolfgang Amadeus Mozart - Eine Klein  │                          │
+│   Art Of Sound And Visio  │   Albert F.                             │                          │
+│   5:30 • 1.7M views • 10  │   5:56 • 360K views • 13 years ago      │                          │
+│                           │                                         │                          │
+│                           │                                         │                          │
+│                           │                                         │                          │
+└───────────────────────────└─────────────────────────────────────────└──────────────────────────┘
+███                                ⏸ PAUSED   •  00:11 / 05:51                                    
+┌ PAUSED ───────────────────────────────────────────────────────────────────── Controls ─────────┐
+│                                                                                                │
+│  Wolfgang Amadeus Mozart - Piano Concerto No. 21 - Andante                             paused  │
+│  poloshia                                                                      volume •   100  │
+│  5:52 • 66M views • 16 years ago                                                speed • 1.00x  │
+│                                                                                                │
+└────────────────────────────────────────────────────────────────────────────────────────────────┘
+CTRL+hjkl: naviage sections • jk: navigate • JK: order • enter: play • d: cut • p: paste after • P
