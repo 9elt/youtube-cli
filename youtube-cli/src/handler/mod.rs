@@ -17,7 +17,7 @@ pub async fn handle_event(key: KeyEvent, app: &mut App) {
 
     let input: Input = key.into();
 
-    if key.modifiers.contains(event::KeyModifiers::CONTROL) && generic::handle_event(app, &input) {
+    if generic::handle_event(app, &input) {
         return;
     }
 
