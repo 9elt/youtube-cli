@@ -38,9 +38,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             ..
         } => {
             app.render_playlist.swap_next();
-            if app.render_playlist.title == app.player.playlist_title {
-                app.sync_playlists();
-            }
+            app.sync_player_playlist_if_playing();
         }
         Input {
             key: Key::Char('K'),
@@ -53,18 +51,14 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             ..
         } => {
             app.render_playlist.swap_prev();
-            if app.render_playlist.title == app.player.playlist_title {
-                app.sync_playlists();
-            }
+            app.sync_player_playlist_if_playing();
         }
         Input {
             key: Key::Char('d'),
             ..
         } => {
             app.render_playlist.cut(&mut app.clipboard);
-            if app.render_playlist.title == app.player.playlist_title {
-                app.sync_playlists();
-            }
+            app.sync_player_playlist_if_playing();
         }
         Input {
             key: Key::Char('p'),
@@ -72,9 +66,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             ..
         } => {
             app.render_playlist.paste(&mut app.clipboard);
-            if app.render_playlist.title == app.player.playlist_title {
-                app.sync_playlists();
-            }
+            app.sync_player_playlist_if_playing();
         }
         Input {
             key: Key::Char('P'),
@@ -82,15 +74,13 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             ..
         } => {
             app.render_playlist.paste_before(&mut app.clipboard);
-            if app.render_playlist.title == app.player.playlist_title {
-                app.sync_playlists();
-            }
+            app.sync_player_playlist_if_playing();
         }
         Input {
             key: Key::Enter, ..
         } => {
             if app.player.play(app.render_playlist.selected_mut()).await {
-                app.sync_playlists();
+                app.sync_player_playlist();
             };
         }
         _ => {}

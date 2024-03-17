@@ -56,11 +56,17 @@ impl App {
         }
     }
 
-    pub fn sync_playlists(&mut self) {
+    pub fn sync_player_playlist(&mut self) {
         self.player.set_playlist(
             self.render_playlist.data.clone(),
             self.render_playlist.title.clone(),
         );
+    }
+
+    pub fn sync_player_playlist_if_playing(&mut self) {
+        if self.player.playlist_title == self.render_playlist.title {
+            self.sync_player_playlist();
+        }
     }
 
     pub fn load_playlists() -> Select<Playlist> {

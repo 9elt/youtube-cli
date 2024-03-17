@@ -40,18 +40,19 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                     SearchResult::Video(video) => {
                         if app.render_playlist.data.iter().any(|v| v == video) {
                             app.player.play(video).await;
-                            app.sync_playlists();
+                            app.sync_player_playlist();
                         } else if app.player.playing.is_none() {
                             app.player.play(video).await;
                             app.render_playlist.data.push(video.clone());
-                            app.sync_playlists();
+                            app.sync_player_playlist();
                         } else {
                             app.render_playlist.data.push(video.clone());
+                            app.sync_player_playlist_if_playing();
                         }
                     }
                     SearchResult::Playlist(playlist) => {
                         let title =
-                            format!("Ⓟ {}", playlist.title.clone().unwrap_or("Videos".into()));
+                            format!("Ⓟ {}", playlist.title.clone().unwrap_or("unknown".into()));
 
                         if let Some(videos) = playlist.videos().await {
                             if app.render_playlist.title == title {
@@ -78,24 +79,18 @@ pub async fn handle_event(app: &mut App, input: &Input) {
 
                             app.section.set(Section::Playlist);
                         } else {
-                            app.search = Search::Error(format!(
-                                "Couldn't load '{}' videos",
-                                playlist.title.clone().unwrap_or("playlist".into())
-                            ));
+                            app.search = Search::Error(format!("Couldn't load '{title}' videos"));
                         }
                     }
                     SearchResult::Channel(channel) => {
                         let title =
-                            format!("Ⓒ {}", channel.title.clone().unwrap_or("Videos".into()));
+                            format!("Ⓒ {}", channel.title.clone().unwrap_or("unknown".into()));
 
                         if let Some(videos) = channel.videos().await {
                             app.search =
                                 Search::Ok(Select::<SearchResult>::from_videos(videos, title));
                         } else {
-                            app.search = Search::Error(format!(
-                                "Couldn't load '{}' videos",
-                                channel.title.clone().unwrap_or("channel".into())
-                            ));
+                            app.search = Search::Error(format!("Couldn't load '{title}' videos"));
                         }
                     }
                 }
