@@ -1,15 +1,33 @@
 mod body;
 mod footer;
 mod header;
+mod help;
 mod util;
 
 use crate::app::App;
 use body::render_body;
 use footer::render_footer;
 use header::render_header;
+use help::render_help;
 use ratatui::{prelude::*, Frame};
 
 pub fn render(frame: &mut Frame, app: &mut App) {
+    let base_layout = if app.show_help {
+        Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([Constraint::Percentage(50), Constraint::Percentage(50)])
+            .split(frame.size())
+    } else {
+        Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([Constraint::Percentage(100)])
+            .split(frame.size())
+    };
+
+    if app.show_help {
+        render_help(frame, base_layout[1]);
+    }
+
     let has_suggestions = app.section.is_search() && !app.search_query.suggestions.data.is_empty();
 
     let layout = Layout::default()
@@ -23,7 +41,7 @@ pub fn render(frame: &mut Frame, app: &mut App) {
             Constraint::Percentage(100),
             Constraint::Min(9),
         ])
-        .split(frame.size());
+        .split(base_layout[0]);
 
     render_header(frame, app, layout[0]);
 

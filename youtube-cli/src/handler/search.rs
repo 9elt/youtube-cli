@@ -1,3 +1,4 @@
+// @section Search
 use crate::app::App;
 use crate::layout::Section;
 use crate::search::Search;
@@ -7,6 +8,7 @@ use youtube_api::{search, SearchResult};
 
 pub async fn handle_event(app: &mut App, input: &Input) {
     match input {
+        // @key Enter | Search
         Input {
             key: Key::Enter, ..
         } => {
@@ -25,6 +27,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                 app.search = Search::Error(format!("No results for '{}'", app.search_query.query));
             }
         }
+        // @key Tab | Select next suggestion
         Input {
             key: Key::Tab,
             shift: false,
@@ -41,6 +44,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             }
             app.search_query.load_selected().await;
         }
+        // @key Shift + Tab | Select previous suggestion
         Input {
             key: Key::Tab,
             shift: true,
@@ -57,6 +61,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             }
             app.search_query.load_selected().await;
         }
+        // @key Esc | Cancel suggestions selection
         Input { key: Key::Esc, .. }
         | Input {
             key: Key::Char('q'),

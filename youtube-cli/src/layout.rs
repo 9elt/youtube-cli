@@ -67,18 +67,6 @@ impl LayoutSection {
     pub fn is_player_controls(&self) -> bool {
         self.id == Section::PlayerControls
     }
-
-    pub fn key_help(&self) -> &str {
-        match self.id {
-            Section::Search=> "CTRL+hjkl: naviage sections • enter: search",
-            Section::SearchResults => "CTRL+hjkl: naviage sections • jk: navigate • enter: add to queue / play",
-            Section::Playlist=> "CTRL+hjkl: naviage sections • jk: navigate • JK: order • enter: play • d: cut • p: paste after • P: paste before",
-            Section::Drawer=> "CTRL+hjkl: naviage sections • jk: navigate • JK: order • enter: select",
-            Section::PlayerControls=> {
-                "CTRL+hjkl: naviage sections • space: play / pause • h: seek -15s • l: seek +15s • H: seek -60s • L: seek +60s"
-            }
-        }
-    }
 }
 
 impl LayoutSection {

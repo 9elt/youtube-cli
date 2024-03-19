@@ -1,3 +1,4 @@
+// @section Drawer
 use crate::app::App;
 use crate::layout::Section;
 use crate::select::Select;
@@ -6,6 +7,7 @@ use youtube_api::Video;
 
 pub fn handle_event(app: &mut App, input: &Input) {
     match input {
+        // @key j | Select next
         Input {
             key: Key::Char('j'),
             ..
@@ -17,6 +19,7 @@ pub fn handle_event(app: &mut App, input: &Input) {
         } => {
             app.closet.incr(1);
         }
+        // @key k | Select previous
         Input {
             key: Key::Char('k'),
             ..
@@ -28,6 +31,7 @@ pub fn handle_event(app: &mut App, input: &Input) {
         } => {
             app.closet.incr(-1);
         }
+        // @key J | Move selected down
         Input {
             key: Key::Char('J'),
             ..
@@ -39,6 +43,7 @@ pub fn handle_event(app: &mut App, input: &Input) {
         } => {
             app.closet.swap_next();
         }
+        // @key K | Move selected up
         Input {
             key: Key::Char('K'),
             ..
@@ -50,6 +55,7 @@ pub fn handle_event(app: &mut App, input: &Input) {
         } => {
             app.closet.swap_prev();
         }
+        // @key d | Cut
         Input {
             key: Key::Char('d'),
             ..
@@ -58,18 +64,21 @@ pub fn handle_event(app: &mut App, input: &Input) {
                 app.closet.cut(&mut app.closet_clipboard);
             }
         }
+        // @key p | Paste
         Input {
             key: Key::Char('p'),
             ..
         } => {
             app.closet.paste(&mut app.closet_clipboard);
         }
+        // @key P | Paste before
         Input {
             key: Key::Char('P'),
             ..
         } => {
             app.closet.paste_before(&mut app.closet_clipboard);
         }
+        // @key Enter | Open playlist
         Input {
             key: Key::Enter, ..
         } => {

@@ -1,3 +1,4 @@
+// @section SearchResults
 use crate::app::App;
 use crate::layout::Section;
 use crate::playlist::Playlist;
@@ -8,6 +9,7 @@ use youtube_api::{SearchResult, Video};
 
 pub async fn handle_event(app: &mut App, input: &Input) {
     match input {
+        // @key j | Select next
         Input {
             key: Key::Char('j'),
             ..
@@ -17,6 +19,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                 search.incr(1);
             }
         }
+        // @key k | Select previous
         Input {
             key: Key::Char('k'),
             ..
@@ -26,6 +29,11 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                 search.incr(-1);
             }
         }
+        // @key Enter (video) | Add to playlist
+        // @key Enter x2 (video) | Play video
+        // @key Ctrl + Enter x2 (video) | Play video from start
+        // @key Enter (channel) | Expand channel videos
+        // @key Enter (playlist) | Load playlist
         Input {
             key: Key::Enter, ..
         } => {
@@ -39,10 +47,18 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                 match selected {
                     SearchResult::Video(video) => {
                         if app.render_playlist.data.iter().any(|v| v == video) {
-                            app.player.play(video).await;
+                            if input.ctrl {
+                                app.player.play_from_start(video).await;
+                            } else {
+                                app.player.play(video).await;
+                            }
                             app.sync_player_playlist();
                         } else if app.player.playing.is_none() {
-                            app.player.play(video).await;
+                            if input.ctrl {
+                                app.player.play_from_start(video).await;
+                            } else {
+                                app.player.play(video).await;
+                            }
                             app.render_playlist.data.push(video.clone());
                             app.sync_player_playlist();
                         } else {

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+result=""
+
+for filename in ./youtube-cli/src/handler/*; do
+	file="$(cat "$filename")"
+
+	section="$(echo "$file" | grep @section | sed -e 's|// @section ||' | xargs)"
+	raw_keys="$(echo "$file" | grep @key | sed -e 's|// @key ||' | sed -e 's| |@|g')"
+
+	keys=()
+	for key in ${raw_keys// /@}; do
+		keys+=("$(echo "${key//@/ }" | xargs)")
+	done
+
+	[ -z "$section" ] && continue
+
+	result+="Section::new(\" $section \", r#\""
+
+	for key_desc in "${keys[@]}"; do
+		key="$(echo "${key_desc/|*/}" | xargs)"
+		description="$(echo "${key_desc/*|/}" | xargs)"
+
+		result+="$key • $description\n"
+	done
+	# result="${result::-3}"
+	result+="\"#),\n"
+done
+
+sed -i -e "/\/\/ @autogen/,/\/\/ @autogen/c\// @autogen\n$result// @autogen" ./youtube-cli/src/renderer/help.rs

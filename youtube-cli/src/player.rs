@@ -113,9 +113,20 @@ impl Player {
         false
     }
 
+    pub async fn play_from_start(&mut self, video: &mut Video) -> bool {
+        let id = hash(&video.video_id);
+        self.timestamps.set(id, 0.0);
+
+        self.play_id(id, video).await
+    }
+
     pub async fn play(&mut self, video: &mut Video) -> bool {
         let id = hash(&video.video_id);
 
+        self.play_id(id, video).await
+    }
+
+    async fn play_id(&mut self, id: u64, video: &mut Video) -> bool {
         if self.playing_id == Some(id) && !self.is_done {
             return true;
         }
@@ -248,7 +259,7 @@ impl Player {
 
             if self.is_done && self.playing.is_some() {
                 if let Some(mut video) = self.next() {
-                    self.play(&mut video).await;
+                    self.play_from_start(&mut video).await;
                 }
             }
         }
@@ -380,13 +391,11 @@ impl Timestamps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 struct Timestamp {
     id: u64,
     timestamp: f64,
 }
-
-impl Copy for Timestamp {}
 
 impl Default for Timestamp {
     fn default() -> Self {

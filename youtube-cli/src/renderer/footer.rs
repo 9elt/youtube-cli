@@ -111,7 +111,7 @@ pub fn render_footer(frame: &mut Frame, app: &mut App, footer_layout: Rect) {
     }
 
     frame.render_widget(
-        Paragraph::new(app.section.key_help())
+        Paragraph::new("Ctrl + t • Show key bindings")
             .block(Block::default().style(Style::default().fg(TEXT_SECONDARY_COLOR)))
             .alignment(Alignment::Center),
         key_help_layout,
