@@ -1,5 +1,5 @@
 mod drawer;
-mod generic;
+mod general;
 mod player;
 mod playlist;
 mod results;
@@ -17,7 +17,7 @@ pub async fn handle_event(key: KeyEvent, app: &mut App) {
 
     let input: Input = key.into();
 
-    if generic::handle_event(app, &input) {
+    if general::handle_event(app, &input) {
         return;
     }
 

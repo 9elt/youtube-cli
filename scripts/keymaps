@@ -15,7 +15,11 @@ for filename in ./youtube-cli/src/handler/*; do
 
 	[ -z "$section" ] && continue
 
-	result+="Section::new(\" $section \", r#\""
+	if [[ "$section" =~ "None" ]]; then
+		result+="SectionKeymap::new(None, r#\""
+	else
+		result+="SectionKeymap::new(Some(Section::$section), r#\""
+	fi
 
 	for key_desc in "${keys[@]}"; do
 		key="$(echo "${key_desc/|*/}" | xargs)"
@@ -23,7 +27,7 @@ for filename in ./youtube-cli/src/handler/*; do
 
 		result+="$key • $description\n"
 	done
-	# result="${result::-3}"
+
 	result+="\"#),\n"
 done
 

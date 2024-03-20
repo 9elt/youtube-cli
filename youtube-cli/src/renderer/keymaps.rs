@@ -1,22 +1,46 @@
-use crate::config::{TEXT_MAIN_COLOR, TEXT_SECONDARY_COLOR};
+use crate::app::App;
+use crate::config::{ACTIVE_MAIN_COLOR, TEXT_MAIN_COLOR, TEXT_SECONDARY_COLOR};
+use crate::layout::Section;
 use ratatui::{prelude::*, widgets::*, Frame};
 
-struct Section {
+struct SectionKeymap {
+    section: Option<Section>,
     title: &'static str,
     content: &'static str,
 }
 
-impl Section {
-    pub fn new(title: &'static str, content: &'static str) -> Self {
-        Self { title, content }
+impl SectionKeymap {
+    pub fn new(section: Option<Section>, content: &'static str) -> Self {
+        Self {
+            section,
+            title: match section {
+                Some(Section::PlayerControls) => " Player ",
+                Some(Section::Drawer) => " Drawer ",
+                Some(Section::Playlist) => " Playlist ",
+                Some(Section::SearchResults) => " Results ",
+                Some(Section::Search) => " Search ",
+                None => " General ",
+            },
+            content,
+        }
+    }
+    fn to_u8(&self) -> u8 {
+        match self.section {
+            None => 0,
+            Some(Section::Search) => 1,
+            Some(Section::SearchResults) => 2,
+            Some(Section::Playlist) => 3,
+            Some(Section::Drawer) => 4,
+            Some(Section::PlayerControls) => 5,
+        }
     }
 }
 
-pub fn render_keymaps(frame: &mut Frame, layout: Rect) {
-    let sections = [
+pub fn render_keymaps(frame: &mut Frame, app: &mut App, layout: Rect) {
+    let mut sections = [
         // @autogen
-        Section::new(
-            " Drawer ",
+        SectionKeymap::new(
+            Some(Section::Drawer),
             r#"j • Select next
 k • Select previous
 J • Move selected down
@@ -27,8 +51,8 @@ P • Paste before
 Enter • Open playlist
 "#,
         ),
-        Section::new(
-            " Generic ",
+        SectionKeymap::new(
+            None,
             r#"Ctrl+c • Quit
 Ctrl+h • Left section
 Ctrl+j • Below section
@@ -37,8 +61,8 @@ Ctrl+l • Right section
 Ctrl+t • Toggle keymaps
 "#,
         ),
-        Section::new(
-            " PlayerControls ",
+        SectionKeymap::new(
+            Some(Section::PlayerControls),
             r#"Space • Toggle pause/play
 h • Seek backward 5s
 l • Seek forward 5s
@@ -51,8 +75,8 @@ p • Speed up
 m • Toggle mute
 "#,
         ),
-        Section::new(
-            " Playlist ",
+        SectionKeymap::new(
+            Some(Section::Playlist),
             r#"j • Select next
 k • Select previous
 J • Move selected down
@@ -64,8 +88,8 @@ Enter • Play video
 Ctrl+Enter • Play video from start
 "#,
         ),
-        Section::new(
-            " SearchResults ",
+        SectionKeymap::new(
+            Some(Section::SearchResults),
             r#"j • Select next
 k • Select previous
 Enter (video) • Add to playlist
@@ -75,8 +99,8 @@ Enter (channel) • Expand channel videos
 Enter (playlist) • Load playlist
 "#,
         ),
-        Section::new(
-            " Search ",
+        SectionKeymap::new(
+            Some(Section::Search),
             r#"Enter • Search
 Tab • Select next suggestion
 Shift+Tab • Select previous suggestion
@@ -85,6 +109,8 @@ Esc • Cancel suggestions selection
         ),
         // @autogen
     ];
+
+    sections.sort_by_key(|section| section.to_u8());
 
     let sections_size = sections.len();
 
@@ -115,7 +141,13 @@ Esc • Cancel suggestions selection
                     Block::default()
                         .title(section.title)
                         .borders(Borders::ALL)
-                        .border_style(Style::default().fg(TEXT_SECONDARY_COLOR))
+                        .border_style(Style::default().fg(
+                            if section.section == Some(app.section.id) {
+                                ACTIVE_MAIN_COLOR
+                            } else {
+                                TEXT_SECONDARY_COLOR
+                            },
+                        ))
                         .padding(Padding::proportional(1)),
                 )
                 .alignment(Alignment::Left),

@@ -29,11 +29,11 @@ pub fn render_header(frame: &mut Frame, app: &mut App, header_layout: Rect) {
                 Borders::ALL
             })
             .title(" Search ")
-            .border_style(if app.section.is_search() {
-                Style::default().fg(ACTIVE_MAIN_COLOR)
+            .border_style(Style::default().fg(if app.section.is_search() {
+                ACTIVE_MAIN_COLOR
             } else {
-                Style::default().fg(TEXT_MAIN_COLOR)
-            })
+                TEXT_SECONDARY_COLOR
+            }))
             .padding(Padding::left(1)),
     );
 
@@ -63,7 +63,7 @@ pub fn render_header(frame: &mut Frame, app: &mut App, header_layout: Rect) {
                         .border_style(Style::default().fg(if app.section.is_search() {
                             ACTIVE_MAIN_COLOR
                         } else {
-                            TEXT_MAIN_COLOR
+                            TEXT_SECONDARY_COLOR
                         }))
                         .padding(Padding::horizontal(1)),
                 )

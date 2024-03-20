@@ -1,6 +1,6 @@
 use super::util::{playing_video_label, render_result};
 use crate::app::App;
-use crate::config::{ACTIVE_MAIN_COLOR, TEXT_MAIN_COLOR, TEXT_SECONDARY_COLOR};
+use crate::config::{ACTIVE_MAIN_COLOR, TEXT_SECONDARY_COLOR};
 use ratatui::{prelude::*, symbols, widgets::*, Frame};
 use youtube_api::SearchResult;
 
@@ -47,7 +47,7 @@ pub fn render_footer(frame: &mut Frame, app: &mut App, footer_layout: Rect) {
                     .border_style(Style::default().fg(if app.section.is_player_controls() {
                         ACTIVE_MAIN_COLOR
                     } else {
-                        TEXT_MAIN_COLOR
+                        TEXT_SECONDARY_COLOR
                     }))
                     .title(if app.player.is_paused {
                         " ⏸ PAUSED "
@@ -86,7 +86,7 @@ pub fn render_footer(frame: &mut Frame, app: &mut App, footer_layout: Rect) {
                     .border_style(Style::default().fg(if app.section.is_player_controls() {
                         ACTIVE_MAIN_COLOR
                     } else {
-                        TEXT_MAIN_COLOR
+                        TEXT_SECONDARY_COLOR
                     }))
                     .title(" Controls ")
                     .padding(Padding::proportional(1)),
@@ -101,7 +101,7 @@ pub fn render_footer(frame: &mut Frame, app: &mut App, footer_layout: Rect) {
                 .border_style(Style::default().fg(if app.section.is_player_controls() {
                     ACTIVE_MAIN_COLOR
                 } else {
-                    TEXT_MAIN_COLOR
+                    TEXT_SECONDARY_COLOR
                 }))
                 .border_set(symbols::border::PLAIN)
                 .title(" Player ")

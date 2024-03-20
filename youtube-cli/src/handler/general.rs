@@ -1,4 +1,4 @@
-// @section Generic
+// @section None
 use crate::app::App;
 use tui_textarea::{Input, Key};
 

@@ -25,7 +25,7 @@ pub fn render(frame: &mut Frame, app: &mut App) {
     };
 
     if app.show_keymaps {
-        render_keymaps(frame, base_layout[1]);
+        render_keymaps(frame, app, base_layout[1]);
     }
 
     let has_suggestions = app.section.is_search() && !app.search_query.suggestions.data.is_empty();

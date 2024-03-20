@@ -1,6 +1,6 @@
 use super::util::render_result;
 use crate::app::App;
-use crate::config::{ACTIVE_MAIN_COLOR, TEXT_MAIN_COLOR};
+use crate::config::{ACTIVE_MAIN_COLOR, TEXT_MAIN_COLOR, TEXT_SECONDARY_COLOR};
 use crate::layout::LAYOUT_RATIO;
 use crate::search::Search;
 use ratatui::{prelude::*, symbols, widgets::*, Frame};
@@ -47,7 +47,7 @@ pub fn render_body(frame: &mut Frame, app: &mut App, body_layout: Rect) {
         .border_style(Style::default().fg(if app.section.is_search_results() {
             ACTIVE_MAIN_COLOR
         } else {
-            TEXT_MAIN_COLOR
+            TEXT_SECONDARY_COLOR
         }))
         .padding(Padding::proportional(1));
 
@@ -103,7 +103,7 @@ pub fn render_body(frame: &mut Frame, app: &mut App, body_layout: Rect) {
         .border_style(Style::default().fg(if app.section.is_playlist() {
             ACTIVE_MAIN_COLOR
         } else {
-            TEXT_MAIN_COLOR
+            TEXT_SECONDARY_COLOR
         }))
         .padding(Padding::proportional(1));
 
@@ -144,7 +144,7 @@ pub fn render_body(frame: &mut Frame, app: &mut App, body_layout: Rect) {
         .border_style(Style::default().fg(if app.section.is_drawer() {
             ACTIVE_MAIN_COLOR
         } else {
-            TEXT_MAIN_COLOR
+            TEXT_SECONDARY_COLOR
         }))
         .padding(Padding::proportional(1));
 
