@@ -44,7 +44,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             }
             app.search_query.load_selected().await;
         }
-        // @key Shift + Tab | Select previous suggestion
+        // @key Shift+Tab | Select previous suggestion
         Input {
             key: Key::Tab,
             shift: true,

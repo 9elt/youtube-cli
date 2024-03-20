@@ -27,4 +27,6 @@ for filename in ./youtube-cli/src/handler/*; do
 	result+="\"#),\n"
 done
 
-sed -i -e "/\/\/ @autogen/,/\/\/ @autogen/c\// @autogen\n$result// @autogen" ./youtube-cli/src/renderer/help.rs
+sed -i -e "/\/\/ @autogen/,/\/\/ @autogen/c\// @autogen\n$result// @autogen" ./youtube-cli/src/renderer/keymaps.rs
+
+echo 'keymaps updated'

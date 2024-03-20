@@ -30,8 +30,8 @@ pub async fn handle_event(app: &mut App, input: &Input) {
             }
         }
         // @key Enter (video) | Add to playlist
-        // @key Enter x2 (video) | Play video
-        // @key Ctrl + Enter x2 (video) | Play video from start
+        // @key Enter (video) | Play video
+        // @key Ctrl+Enter (video) | Play video from start
         // @key Enter (channel) | Expand channel videos
         // @key Enter (playlist) | Load playlist
         Input {

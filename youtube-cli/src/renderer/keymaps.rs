@@ -12,7 +12,7 @@ impl Section {
     }
 }
 
-pub fn render_help(frame: &mut Frame, layout: Rect) {
+pub fn render_keymaps(frame: &mut Frame, layout: Rect) {
     let sections = [
         // @autogen
         Section::new(
@@ -29,11 +29,12 @@ Enter • Open playlist
         ),
         Section::new(
             " Generic ",
-            r#"Ctrl + c • Quit
-Ctrl + h • Left section
-Ctrl + j • Below section
-Ctrl + k • Above section
-Ctrl + l • Right section
+            r#"Ctrl+c • Quit
+Ctrl+h • Left section
+Ctrl+j • Below section
+Ctrl+k • Above section
+Ctrl+l • Right section
+Ctrl+t • Toggle keymaps
 "#,
         ),
         Section::new(
@@ -60,7 +61,7 @@ D • Cut
 P • Paste
 P • Paste before
 Enter • Play video
-Ctrl + Enter • Play video from start
+Ctrl+Enter • Play video from start
 "#,
         ),
         Section::new(
@@ -68,8 +69,8 @@ Ctrl + Enter • Play video from start
             r#"j • Select next
 k • Select previous
 Enter (video) • Add to playlist
-Enter x2 (video) • Play video
-Ctrl + Enter x2 (video) • Play video from start
+Enter (video) • Play video
+Ctrl+Enter (video) • Play video from start
 Enter (channel) • Expand channel videos
 Enter (playlist) • Load playlist
 "#,
@@ -78,7 +79,7 @@ Enter (playlist) • Load playlist
             " Search ",
             r#"Enter • Search
 Tab • Select next suggestion
-Shift + Tab • Select previous suggestion
+Shift+Tab • Select previous suggestion
 Esc • Cancel suggestions selection
 "#,
         ),

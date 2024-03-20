@@ -94,7 +94,7 @@ pub async fn handle_event(app: &mut App, input: &Input) {
                 app.sync_player_playlist();
             };
         }
-        // @key Ctrl + Enter | Play video from start
+        // @key Ctrl+Enter | Play video from start
         Input {
             key: Key::Enter,
             ctrl: true,

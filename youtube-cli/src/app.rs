@@ -18,7 +18,7 @@ pub struct App {
     pub should_quit: bool,
     pub clipboard: Vec<Video>,
     pub closet_clipboard: Vec<Playlist>,
-    pub show_help: bool,
+    pub show_keymaps: bool,
 }
 
 impl App {
@@ -35,7 +35,7 @@ impl App {
             should_quit: false,
             clipboard: Vec::new(),
             closet_clipboard: Vec::new(),
-            show_help: false,
+            show_keymaps: false,
         }
     }
 

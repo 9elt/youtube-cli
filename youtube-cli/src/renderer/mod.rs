@@ -1,18 +1,18 @@
 mod body;
 mod footer;
 mod header;
-mod help;
+mod keymaps;
 mod util;
 
 use crate::app::App;
 use body::render_body;
 use footer::render_footer;
 use header::render_header;
-use help::render_help;
+use keymaps::render_keymaps;
 use ratatui::{prelude::*, Frame};
 
 pub fn render(frame: &mut Frame, app: &mut App) {
-    let base_layout = if app.show_help {
+    let base_layout = if app.show_keymaps {
         Layout::default()
             .direction(Direction::Vertical)
             .constraints([Constraint::Percentage(50), Constraint::Percentage(50)])
@@ -24,8 +24,8 @@ pub fn render(frame: &mut Frame, app: &mut App) {
             .split(frame.size())
     };
 
-    if app.show_help {
-        render_help(frame, base_layout[1]);
+    if app.show_keymaps {
+        render_keymaps(frame, base_layout[1]);
     }
 
     let has_suggestions = app.section.is_search() && !app.search_query.suggestions.data.is_empty();
